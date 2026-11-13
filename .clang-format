@@ -1,0 +1,37 @@
+---
+BasedOnStyle: LLVM
+Language: Cpp
+Standard: Latest
+
+# Отступы и форматирование
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 100
+
+# Выравнивание указателей и ссылок (C++ стиль: int* x, а не Си стиль: int *x)
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# Расстановка фигурных скобок
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortLambdasOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: Never
+
+# Сортировка и группировка #include
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+
+# Пробелы
+SpaceBeforeParens: ControlStatements
+SpacesInAngles: false
+SpaceInEmptyBlock: false
+
+# Пространства имен и комментарии
+FixNamespaceComments: true
+NamespaceIndentation: None
+EmptyLineBeforeAccessModifier: Always
+KeepEmptyLinesAtTheStartOfBlocks: false
+...
