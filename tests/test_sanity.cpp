@@ -2,5 +2,5 @@
 
 TEST(SanityCheck, BasicAssertion) {
     EXPECT_EQ(1 + 1, 2);
-  	EXPECT_TRUE(true);
+    EXPECT_TRUE(true);
 }
