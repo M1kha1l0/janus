@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  check-codestyle:
+    runs-on: ubuntu-24.04
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run clang-format check
+        run: git ls-files '*.cpp' '*.hpp' | xargs -r clang-format --dry-run --Werror
+  
+  build-and-test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++-14, clang++-18]
+        sanitizers: [OFF, ON]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Configure Cmake
+        run: |
+              cmake -B build \
+                -DCMAKE_BUILD_TYPE=Debug \
+                -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} \
+                -DJANUS_ENABLE_SANITIZERS=${{ matrix.sanitizers }}
+      - name: Build
+        run: cmake --build build -j
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure
+
