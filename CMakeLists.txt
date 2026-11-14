@@ -22,6 +22,18 @@ target_compile_options(janus_warnings INTERFACE
     -Wconversion
     -Wshadow
 )
+# sanitaizers
+option(JANUS_ENABLE_SANITIZERS "Enable Address and Undefined Behavior Sanitizers" OFF)
+
+if(JANUS_ENABLE_SANITIZERS)
+    target_compile_options(janus_warnings INTERFACE 
+        -fsanitize=address,undefined 
+        -fno-omit-frame-pointer
+    )
+    target_link_options(janus_warnings INTERFACE 
+        -fsanitize=address,undefined
+    )
+endif()
 
 # libraries 
 add_library(janus_core STATIC

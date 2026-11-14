@@ -17,11 +17,20 @@ jobs:
   
   build-and-test:
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++-14, clang++-18]
+        sanitizers: [OFF, ON]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Configure Cmake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=g++-14
+        run: |
+              cmake -B build \
+                -DCMAKE_BUILD_TYPE=Debug \
+                -DCMAKE_CXX_COMPILER=${{ matrix.compiler }} \
+                -DJANUS_ENABLE_SANITIZERS=${{ matrix.sanitizers }}
       - name: Build
         run: cmake --build build -j
       - name: Run tests
