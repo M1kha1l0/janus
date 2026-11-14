@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  check-codestyle:
+    runs-on: ubuntu-24.04
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run clang-format check
+        run: git ls-files '*.cpp' '*.hpp' | xargs -r clang-format --dry-run --Werror
