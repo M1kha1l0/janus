@@ -22,6 +22,11 @@ target_compile_options(janus_warnings INTERFACE
     -Wconversion
     -Wshadow
 )
+# Фикс несовместимости Clang < 19 и libstdc++ для <expected>
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19)
+    target_compile_definitions(janus_warnings INTERFACE __cpp_concepts=202002L)
+endif()
+
 # sanitaizers
 option(JANUS_ENABLE_SANITIZERS "Enable Address and Undefined Behavior Sanitizers" OFF)
 
