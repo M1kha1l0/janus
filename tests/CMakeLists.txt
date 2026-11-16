@@ -1,6 +1,10 @@
 add_executable(janus_tests
     test_sanity.cpp
+    ByteCursor-test.cpp
+    TlsSniffer-test.cpp
 )
+
+target_include_directories(janus_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(janus_tests
     PRIVATE
